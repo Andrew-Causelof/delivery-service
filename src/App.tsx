@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Breadcrumbs from './components/Breadcrumbs';
 import ServiceTypeMobile from './features/Order/ServiceTypeMobile';
 import MenuDesktop from './features/Menu/MenuDesktop';
@@ -8,7 +9,15 @@ import SectionList from './features/Sections/SectionList';
 import OrderButtonMobile from './features/Order/OrderButtonMobile';
 import Cart from './features/Cart/Cart';
 
+import { useProductStore } from './stores/productStore';
+
 function App() {
+  const fetchSections = useProductStore((state) => state.fetchSections);
+
+  useEffect(() => {
+    fetchSections();
+  }, []);
+
   return (
     <>
       <Breadcrumbs />

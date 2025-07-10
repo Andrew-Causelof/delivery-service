@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface DishProps {
   id: number;
@@ -10,6 +10,8 @@ interface DishProps {
 }
 
 const Dish: React.FC<DishProps> = ({ id, href, img, name, price, weight }) => {
+  const [quantity, setQuantity] = useState<number>(1);
+
   return (
     <div className="dish-frame">
       <div className="img-container">
@@ -26,7 +28,14 @@ const Dish: React.FC<DishProps> = ({ id, href, img, name, price, weight }) => {
       </div>
       <div className="quantity-selector">
         <button className="decrement-btn"></button>
-        <input name="persons" type="persons" value="1" min="1" className="quantity-input" />
+        <input
+          name=""
+          type=""
+          value={quantity}
+          min={1}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          className="quantity-input"
+        />
         <button className="increment-btn"></button>
       </div>
     </div>

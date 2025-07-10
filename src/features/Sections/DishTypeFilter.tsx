@@ -15,6 +15,10 @@ const dishTypes: DishType[] = [
   { slug: 'pork', name: 'Свинина', icon: 'pork' },
   { slug: 'fish', name: 'Рыба', icon: 'fish' },
   { slug: 'vegan', name: 'Веган', icon: 'vegan' },
+  { slug: 'hot', name: 'Острое', icon: 'hot' },
+  { slug: 'halal', name: 'Халяль', icon: '' },
+  { slug: 'bezglutena', name: 'Без глютена', icon: '' },
+  { slug: 'nuts', name: 'Орехи', icon: '' },
 ];
 
 function DishTypeFilter() {

@@ -14,6 +14,7 @@ function ServiceTypeDesktop() {
           name="delivery-cart"
           value="delivery"
           checked={deliveryType === 'delivery'}
+          onChange={() => setDeliveryType('delivery')}
         />
         <label
           htmlFor="option-delivery"
@@ -30,6 +31,7 @@ function ServiceTypeDesktop() {
           name="delivery-cart"
           value="pickup"
           checked={deliveryType === 'pickup'}
+          onChange={() => setDeliveryType('pickup')}
         />
         <label
           htmlFor="option-pickup"
