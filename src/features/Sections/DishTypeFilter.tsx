@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
+import { useProductStore } from '../../stores/productStore';
 
 type DishType = {
   slug: string;
@@ -22,13 +23,18 @@ const dishTypes: DishType[] = [
 ];
 
 function DishTypeFilter() {
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  // const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
-  const toggleFilter = (slug: string) => {
-    setActiveFilters((prev) =>
-      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
-    );
-  };
+  // const toggleFilter = (slug: string) => {
+  //   setActiveFilters((prev) =>
+  //     prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
+  //   );
+  // };
+
+  const selectedFilters = useProductStore((state) => state.selectedFilters);
+  const toggleFilter = useProductStore((state) => state.toggleFilter);
+
+  console.log(selectedFilters);
 
   return (
     <section className="dish-type-filter">
@@ -43,7 +49,7 @@ function DishTypeFilter() {
           <SwiperSlide
             key={slug}
             tag="li"
-            className={`swiper-slide ${activeFilters.includes(slug) ? 'active' : ''}`}
+            className={`swiper-slide ${selectedFilters.includes(slug) ? 'active' : ''}`}
             onClick={() => toggleFilter(slug)}
           >
             <i className={icon}></i>
