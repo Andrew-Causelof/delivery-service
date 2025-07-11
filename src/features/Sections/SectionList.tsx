@@ -6,19 +6,14 @@ import { useProductStore } from '../../stores/productStore';
 function SectionList() {
   const { sections, loading } = useProductStore();
 
+  console.log(sections);
+
   return (
     <>
       {sections.map((item) => (
         <Section title={item.title} desc={item.desc} slug={item.slug} key={item.slug}>
           {item.items.map((product) => (
-            <Card
-              key={item.slug + '_' + product.id}
-              id={product.id}
-              img={product.img}
-              name={product.name}
-              price={product.price}
-              weight={product.weight}
-            />
+            <Card key={item.slug + '_' + product.id} dish={product} />
           ))}
         </Section>
       ))}

@@ -9,7 +9,7 @@ interface SectionProps {
 
 const Section: React.FC<SectionProps> = ({ title, desc, slug, children }) => {
   return (
-    <section className="section-cetegory-list">
+    <section className="section-cetegory-list" data-section={slug}>
       <div className="heading">
         <div className="title">{title}</div>
         <div className="desc">{desc}</div>

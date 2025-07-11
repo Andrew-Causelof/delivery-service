@@ -16,7 +16,7 @@ function MenuMobile() {
 
   const handleOnClick = (tab: string) => {
     setActiveTab(tab);
-    const section = document.getElementById(tab);
+    const section = document.querySelector(`[data-section="${tab}"]`);
     if (section) section.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -47,9 +47,7 @@ function MenuMobile() {
             <div className="pic">
               <img src={item.img} alt={item.title} />
             </div>
-            <a href={item.slug || '#'} className="link">
-              {item.title}
-            </a>
+            <a className="link">{item.title}</a>
           </SwiperSlide>
         ))}
       </Swiper>

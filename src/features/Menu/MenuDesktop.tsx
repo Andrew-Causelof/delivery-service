@@ -14,7 +14,8 @@ function MenuDesktop() {
 
   const handleOnClick = (tab: string) => {
     setActiveTab(tab);
-    const section = document.getElementById(tab);
+    console.log(tab);
+    const section = document.querySelector(`[data-section="${tab}"]`);
     if (section) section.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -29,9 +30,7 @@ function MenuDesktop() {
           <div className="pic">
             <img src={item.img} alt={item.title} />
           </div>
-          <a href="#" className="link">
-            {item.title}
-          </a>
+          <a className="link">{item.title}</a>
         </div>
       ))}
     </div>

@@ -2,51 +2,11 @@ import React from 'react';
 import ServiceTypeDesktop from '../Order/ServiceTypeDesktop';
 import Dish from './Dish';
 import Promo from './Promo';
-
-const cardItems = [
-  {
-    id: 34,
-    img: 'http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg',
-    name: 'Ассорти Шашлыков (свинина, телятина, курица)',
-    price: 2360,
-    weight: '1 295 г',
-    href: '',
-  },
-  {
-    id: 35,
-    img: 'http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg',
-    name: 'Ассорти Шашлыков (свинина, телятина, курица)',
-    price: 2360,
-    weight: '1 295 г',
-    href: '',
-  },
-  {
-    id: 36,
-    img: 'http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg',
-    name: 'Ассорти Шашлыков (свинина, телятина, курица)',
-    price: 2360,
-    weight: '1 295 г',
-    href: '',
-  },
-  {
-    id: 37,
-    img: 'http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg',
-    name: 'Ассорти Шашлыков (свинина, телятина, курица)',
-    price: 2360,
-    weight: '1 295 г',
-    href: '',
-  },
-  {
-    id: 38,
-    img: 'http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg',
-    name: 'Ассорти Шашлыков (свинина, телятина, курица)',
-    price: 2360,
-    weight: '1 295 г',
-    href: '',
-  },
-];
+import { useCartStore } from '../../stores/cartStore';
 
 function Cart() {
+  const { increment, decrement, items } = useCartStore();
+
   const handleClearCart = () => {
     console.log('clear cart');
   };
@@ -63,8 +23,8 @@ function Cart() {
         <ServiceTypeDesktop />
 
         <div className="dishes">
-          {cardItems.map((item) => (
-            <Dish key={item.id} {...item} />
+          {items.map((item) => (
+            <Dish key={item.id} dish={item} />
           ))}
         </div>
       </div>

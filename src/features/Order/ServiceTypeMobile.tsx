@@ -1,6 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 function ServiceTypeMobile() {
   const [deliveryType, setDeliveryType] = useState<'delivery' | 'pickup'>('delivery');
+
+  // useEffect(() => {
+  //   setDeliveryType('delivery');
+  // }, []);
+
+  console.log(deliveryType);
 
   const handleDeliveryType = (type: 'delivery' | 'pickup') => {
     setDeliveryType(type);
@@ -11,14 +17,14 @@ function ServiceTypeMobile() {
         <li>
           <input
             type="radio"
-            id="option-delivery"
-            name="delivery-cart"
+            id="option-delivery-mobile"
+            name="option-delivery-mobile"
             value="delivery"
-            checked={deliveryType === 'delivery'}
+            checked={deliveryType == 'delivery'}
             onChange={() => setDeliveryType('delivery')}
           />
           <label
-            htmlFor="option-delivery"
+            htmlFor="option-delivery-mobile"
             className="noselect"
             onClick={() => handleDeliveryType('delivery')}
           >
@@ -28,14 +34,14 @@ function ServiceTypeMobile() {
         <li>
           <input
             type="radio"
-            id="option-pickup"
-            name="delivery-cart"
+            id="option-pickup-mobile"
+            name="option-pickup-mobile"
             value="pickup"
-            checked={deliveryType === 'pickup'}
+            checked={deliveryType == 'pickup'}
             onChange={() => setDeliveryType('pickup')}
           />
           <label
-            htmlFor="option-pickup"
+            htmlFor="option-pickup-mobile"
             className="noselect"
             onClick={() => handleDeliveryType('pickup')}
           >

@@ -1,42 +1,45 @@
 import React, { useState } from 'react';
+import type { Dish } from '../../types/catalog';
+import { useCartStore } from '../../stores/cartStore';
 
-interface DishProps {
-  id: number;
-  href: string;
-  img: string;
-  name: string;
-  price: number;
-  weight: string;
-}
+type DishProps = {
+  dish: Dish;
+};
 
-const Dish: React.FC<DishProps> = ({ id, href, img, name, price, weight }) => {
-  const [quantity, setQuantity] = useState<number>(1);
+const Dish: React.FC<DishProps> = ({ dish }) => {
+  const { id, img, name, price, weight } = dish;
+
+  const { increment, decrement, items } = useCartStore();
+  const item = items.find((i) => i.id === id);
+  const quantity = item?.quantity || 0;
 
   return (
     <div className="dish-frame">
-      <div className="img-container">
-        <img src={img} alt={name} />
-      </div>
-      <div className="dish-item">
-        <a href={href} className="dish-item-name">
-          {name}
-        </a>
-        <div className="dish-item-additional">
-          <span className="price">2360</span>
-          <div className="weight">1 295 г</div>
+      <div className="group">
+        <div className="img-container">
+          <img src={img} alt={name} />
+        </div>
+        <div className="dish-item">
+          <a className="dish-item-name">{name}</a>
+          <div className="dish-item-additional">
+            <span className="price">{price}</span>
+            <div className="weight">{weight}</div>
+          </div>
         </div>
       </div>
+
       <div className="quantity-selector">
-        <button className="decrement-btn"></button>
+        <button className="decrement-btn" onClick={() => decrement(id)}></button>
         <input
           name=""
-          type=""
+          type="number"
           value={quantity}
           min={1}
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={() => {}}
+          readOnly
           className="quantity-input"
         />
-        <button className="increment-btn"></button>
+        <button className="increment-btn" onClick={() => increment(id)}></button>
       </div>
     </div>
   );

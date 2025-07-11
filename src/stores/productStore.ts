@@ -16,7 +16,7 @@ export const useProductStore = create<ProductStore>((set) => ({
     try {
       const res = await fetch('http://dushes-cafe.seo-gravity.ru/api/catalog/list');
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       set({ sections: data, loading: false });
     } catch (e) {
       console.error('Failed to fetch sections', e);

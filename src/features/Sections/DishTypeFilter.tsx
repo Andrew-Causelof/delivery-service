@@ -16,13 +16,19 @@ const dishTypes: DishType[] = [
   { slug: 'fish', name: 'Рыба', icon: 'fish' },
   { slug: 'vegan', name: 'Веган', icon: 'vegan' },
   { slug: 'hot', name: 'Острое', icon: 'hot' },
-  { slug: 'halal', name: 'Халяль', icon: '' },
-  { slug: 'bezglutena', name: 'Без глютена', icon: '' },
-  { slug: 'nuts', name: 'Орехи', icon: '' },
+  { slug: 'halal', name: 'Халяль', icon: 'halal' },
+  { slug: 'bezglutena', name: 'Без глютена', icon: 'bezglutena' },
+  { slug: 'nuts', name: 'Орехи', icon: 'nuts' },
 ];
 
 function DishTypeFilter() {
-  const [active, setActive] = useState<string>('chicken');
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+
+  const toggleFilter = (slug: string) => {
+    setActiveFilters((prev) =>
+      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
+    );
+  };
 
   return (
     <section className="dish-type-filter">
@@ -37,8 +43,8 @@ function DishTypeFilter() {
           <SwiperSlide
             key={slug}
             tag="li"
-            className={`swiper-slide ${active === slug ? 'active' : ''}`}
-            onClick={() => setActive(slug)}
+            className={`swiper-slide ${activeFilters.includes(slug) ? 'active' : ''}`}
+            onClick={() => toggleFilter(slug)}
           >
             <i className={icon}></i>
             <span>{name}</span>
