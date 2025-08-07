@@ -10,9 +10,15 @@ import OrderButtonMobile from './features/Order/OrderButtonMobile';
 import Cart from './features/Cart/Cart';
 
 import { useProductStore } from './stores/productStore';
+import { useCartStore } from './stores/cartStore';
 
 function App() {
   const fetchSections = useProductStore((state) => state.fetchSections);
+  const fetchCart = useCartStore((state) => state.fetchCart);
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
   useEffect(() => {
     fetchSections();

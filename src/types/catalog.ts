@@ -8,6 +8,8 @@ export type Dish = {
   foId: string;
   filterList: string[];
   cardTags: string[];
+  previewText: string;
+  detailText: string;
 };
 
 export type ProductSection = {
@@ -16,4 +18,10 @@ export type ProductSection = {
   img: string;
   slug: string;
   items: Dish[];
+};
+
+export type DishFilter = {
+  slug: string;
+  name: string;
+  icon?: string;
 };

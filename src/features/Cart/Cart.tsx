@@ -1,11 +1,10 @@
-import React from 'react';
 import ServiceTypeDesktop from '../Order/ServiceTypeDesktop';
 import Dish from './Dish';
 import Promo from './Promo';
 import { useCartStore } from '../../stores/cartStore';
 
 function Cart() {
-  const { increment, decrement, items } = useCartStore();
+  const { items } = useCartStore();
 
   const handleClearCart = () => {
     console.log('clear cart');

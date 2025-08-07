@@ -2,12 +2,6 @@ import { useState, useEffect } from 'react';
 function ServiceTypeMobile() {
   const [deliveryType, setDeliveryType] = useState<'delivery' | 'pickup'>('delivery');
 
-  // useEffect(() => {
-  //   setDeliveryType('delivery');
-  // }, []);
-
-  console.log(deliveryType);
-
   const handleDeliveryType = (type: 'delivery' | 'pickup') => {
     setDeliveryType(type);
   };

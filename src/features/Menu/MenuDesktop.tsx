@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useProductStore } from '../../stores/productStore';
+import MenuDesktopSkeleton from './MenuDesktopSkeleton';
 
 function MenuDesktop() {
   // const { sections, loading } = useProductStore();
   const sections = useProductStore((state) => state.sections);
   const selectedFilters = useProductStore((state) => state.selectedFilters);
+  const isLoading = useProductStore((state) => state.loading);
 
   const filteredSections =
     selectedFilters.length === 0
@@ -34,8 +36,7 @@ function MenuDesktop() {
     if (section) section.scrollIntoView({ behavior: 'smooth' });
   };
 
-  console.log('filteredSections', filteredSections);
-  console.log('activeTab', activeTab);
+  if (isLoading) return <MenuDesktopSkeleton />;
 
   return (
     <div className="menu">

@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Card: React.FC<Props> = ({ dish }) => {
-  const { id, img, name, price, weight } = dish;
+  const { id, img, name, price, weight, detailText } = dish;
   const { addItem, increment, decrement, items } = useCartStore();
   const item = items.find((i) => i.id === id);
   const quantity = item?.quantity || 0;
@@ -80,14 +80,12 @@ const Card: React.FC<Props> = ({ dish }) => {
             <div className="pic">
               <img src={img} alt={name} />
             </div>
-            <div className="bottom">
-              <div className="composition">Состав:</div>
-              <div className="desc">
-                Люля-кебаб телятина, люля-кебаб баранина, шашлык курица, шашлык телятина, шашлык
-                баранина из мякоти, молодой картофель, шампиньоны на углях, нарезка из лука, лаваш
-                тонкий, гранат, соус аджика.
+            {detailText && (
+              <div className="bottom">
+                <div className="composition">Состав:</div>
+                <div className="desc" dangerouslySetInnerHTML={{ __html: detailText }} />
               </div>
-            </div>
+            )}
           </div>
           <div className="frame-row">
             <div className="order-group">
