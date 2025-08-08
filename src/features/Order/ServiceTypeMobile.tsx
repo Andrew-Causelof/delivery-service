@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
-function ServiceTypeMobile() {
-  const [deliveryType, setDeliveryType] = useState<'delivery' | 'pickup'>('delivery');
+import { useCartStore } from '../../stores/cartStore';
 
-  const handleDeliveryType = (type: 'delivery' | 'pickup') => {
-    setDeliveryType(type);
-  };
+function ServiceTypeMobile() {
+  const { deliveryType, setDeliveryType } = useCartStore();
+
   return (
     <section className="service-type-mobile">
       <ul className="delivery">
@@ -20,7 +18,7 @@ function ServiceTypeMobile() {
           <label
             htmlFor="option-delivery-mobile"
             className="noselect"
-            onClick={() => handleDeliveryType('delivery')}
+            onClick={() => setDeliveryType('delivery')}
           >
             Доставка
           </label>
@@ -37,7 +35,7 @@ function ServiceTypeMobile() {
           <label
             htmlFor="option-pickup-mobile"
             className="noselect"
-            onClick={() => handleDeliveryType('pickup')}
+            onClick={() => setDeliveryType('pickup')}
           >
             Навынос
           </label>

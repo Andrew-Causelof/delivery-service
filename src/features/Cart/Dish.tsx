@@ -13,8 +13,6 @@ const Dish: React.FC<DishProps> = ({ dish }) => {
   const item = items.find((i) => i.id === id);
   const quantity = item?.quantity || 0;
 
-  console.log(items);
-
   return (
     <div className="dish-frame">
       <div className="group">

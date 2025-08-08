@@ -1,10 +1,8 @@
-import { useState } from 'react';
+import { useCartStore } from '../../stores/cartStore';
 
 function ServiceTypeDesktop() {
-  const [deliveryType, setDeliveryType] = useState<'delivery' | 'pickup'>('delivery');
-  const handleDeliveryType = (type: 'delivery' | 'pickup') => {
-    setDeliveryType(type);
-  };
+  const { deliveryType, setDeliveryType } = useCartStore();
+
   return (
     <ul className="delivery">
       <li>
@@ -19,7 +17,7 @@ function ServiceTypeDesktop() {
         <label
           htmlFor="option-delivery"
           className="noselect"
-          onClick={() => handleDeliveryType('delivery')}
+          onClick={() => setDeliveryType('delivery')}
         >
           Доставка
         </label>
@@ -36,7 +34,7 @@ function ServiceTypeDesktop() {
         <label
           htmlFor="option-pickup"
           className="noselect"
-          onClick={() => handleDeliveryType('pickup')}
+          onClick={() => setDeliveryType('pickup')}
         >
           Навынос
         </label>

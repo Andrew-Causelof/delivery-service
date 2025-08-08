@@ -1,0 +1,126 @@
+.skeleton-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #eee;
+}
+
+.skeleton-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-bottom: 6px;
+  background: #ccc;
+}
+
+.skeleton-text {
+  width: 40px;
+  height: 8px;
+  border-radius: 4px;
+  background: #ccc;
+}
+
+/* shimmer-эффект */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+.card-skeleton {
+  width: 100%;
+  max-width: 180px;
+  padding: 12px;
+  background: #eee;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  background: #ccc;
+}
+
+.skeleton-title,
+.skeleton-subtitle {
+  height: 14px;
+  border-radius: 4px;
+  background: #ccc;
+}
+
+.skeleton-title {
+  width: 80%;
+}
+
+.skeleton-subtitle {
+  width: 60%;
+}
+
+/* shimmer */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    left: 100%;
+  }
+}
+[data-section^='skeleton-'] {
+  width: 100%;
+}
+
+.skeleton-cards-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.skeleton-pic {
+  width: 40px;
+  height: 40px;
+  background: #ccc;
+  border-radius: 12px;
+  flex: none;
+}
+
+.skeleton-link {
+  margin-top: 8px;
+  width: 100%;
+  height: 14px;
+  background: #ccc;
+  border-radius: 4px;
+}

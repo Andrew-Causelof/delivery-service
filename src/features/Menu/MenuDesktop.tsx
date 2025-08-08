@@ -23,6 +23,30 @@ function MenuDesktop() {
   const [activeTab, setActiveTab] = useState<string>('');
 
   useEffect(() => {
+    const sectionElements = document.querySelectorAll('[data-section]');
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -70% 0px', // позволяет считать секцию активной, когда она вошла на 30% сверху
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const slug = entry.target.getAttribute('data-section');
+          if (slug) setActiveTab(slug);
+        }
+      });
+    }, options);
+
+    sectionElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      sectionElements.forEach((el) => observer.unobserve(el));
+    };
+  }, [filteredSections]);
+
+  useEffect(() => {
     if (filteredSections.length && activeTab === '') {
       setActiveTab(filteredSections[0].slug);
     }

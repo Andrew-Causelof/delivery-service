@@ -119,3 +119,10 @@ i.bezglutena {
   border: none;
   outline: none;
 }
+.product-category .sidebar-right .bottom .promo-code .submit-code:hover {
+  color: rgb(136, 200, 69);
+}
+
+.product-category .sidebar-right .bottom .promo-code .submit-code.cancel:hover {
+  color: rgba(221, 60, 69, 1);
+}

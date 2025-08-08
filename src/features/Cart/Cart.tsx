@@ -4,7 +4,7 @@ import Promo from './Promo';
 import { useCartStore } from '../../stores/cartStore';
 
 function Cart() {
-  const { items } = useCartStore();
+  const { items, totalPrice, getDeliveryLabel } = useCartStore();
 
   const handleClearCart = () => {
     console.log('clear cart');
@@ -34,7 +34,7 @@ function Cart() {
           <div className="info">
             <div className="info-item">
               <span className="name">Способ получения:</span>
-              <span className="value">Доставка</span>
+              <span className="value">{getDeliveryLabel()}</span>
             </div>
 
             <div className="info-item">
@@ -46,7 +46,7 @@ function Cart() {
 
         <button className="order-submit">
           <span className="msg"> Верно, к оформлению</span>
-          <span className="amount"> 5 141 ₽</span>
+          <span className="amount"> {totalPrice().toLocaleString('ru-RU')} ₽</span>
         </button>
       </div>
     </>
