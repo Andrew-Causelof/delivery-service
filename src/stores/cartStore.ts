@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
-import type { CartStore, DeliveryType } from '../types/cart';
+import type { CartStore, DeliveryType, CartItem, ApiCouponResponse } from '../types/cart';
 import { API_BASE_URL } from '../config';
 
 export const useCartStore = create<CartStore>((set, get) => ({
@@ -8,8 +8,13 @@ export const useCartStore = create<CartStore>((set, get) => ({
   couponApplied: false,
   loading: false,
   coupon: '',
-  deliveryType: 'delivery',
+  deliveryType: 'delivery' as DeliveryType,
+  discount: '',
+  totalPrice: '',
+  priceWithDiscount: '',
+
   setDeliveryType: (type: DeliveryType) => set({ deliveryType: type }),
+
   getDeliveryLabel: () => {
     const type = get().deliveryType;
     return type === 'delivery' ? 'Доставка' : 'Навынос';
@@ -18,27 +23,18 @@ export const useCartStore = create<CartStore>((set, get) => ({
   clearCart: async () => {
     set({ loading: true });
     try {
-      const res = await axios.get(`${API_BASE_URL}/basket/clear`);
-      console.log(res.data);
+      const res = await axios.post(`${API_BASE_URL}/basket/clear`);
+      set({
+        items: [],
+        loading: false,
+        discount: '0',
+        totalPrice: '0',
+        priceWithDiscount: '0',
+      });
     } catch (e) {
       console.error('Ошибка очистки корзины', e);
     } finally {
       set({ loading: false, items: [] });
-    }
-  },
-
-  applyCoupon: async (coupon) => {
-    set({ loading: true });
-    try {
-      const res = await axios.post(`${API_BASE_URL}/coupon/apply`, {
-        code: coupon,
-      });
-      console.log(res.data);
-      set({ couponApplied: true, coupon: coupon });
-    } catch (e) {
-      console.error('Ошибка применения купона', e);
-    } finally {
-      set({ loading: false });
     }
   },
 
@@ -55,16 +51,75 @@ export const useCartStore = create<CartStore>((set, get) => ({
     }
   },
 
-  removeCoupon: async (coupon) => {
+  applyCoupon: async (coupon: string): Promise<ApiCouponResponse> => {
     set({ loading: true });
     try {
-      const res = await axios.post(`${API_BASE_URL}/coupon/cancel`, {
-        code: coupon,
-      });
-      console.log(res.data);
-      set({ couponApplied: false, coupon: '' });
+      const { data } = await axios.post<ApiCouponResponse>(
+        `${API_BASE_URL}/coupon/apply`,
+        { coupon },
+        { withCredentials: true }
+      );
+
+      if (data.success) {
+        set({ couponApplied: true, coupon });
+
+        if (data.amount) {
+          set({
+            discount: data.amount.DISCOUNT_VALUE,
+            totalPrice: data.amount.TOTAL_PRICE,
+            priceWithDiscount: data.amount.PRICE_WITHOUT_DISCOUNT,
+          });
+        }
+      }
+      return data;
     } catch (e) {
-      console.error('Ошибка при удалении купона', e);
+      if (axios.isAxiosError(e) && e.response) {
+        return (
+          (e.response.data as ApiCouponResponse) || {
+            success: false,
+            status: 'error',
+            message: 'Неизвестная ошибка as ApiCouponResponse',
+          }
+        );
+      }
+      return { success: false, status: 'error', message: 'Неизвестная ошибка as catch' };
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  removeCoupon: async (): Promise<ApiCouponResponse> => {
+    set({ loading: true });
+    try {
+      const { data } = await axios.post<ApiCouponResponse>(
+        `${API_BASE_URL}/coupon/cancel`,
+        {}, // пустое тело
+        { withCredentials: true }
+      );
+
+      if (data.success) {
+        set({ couponApplied: false, coupon: '' });
+
+        if (data.amount) {
+          set({
+            discount: data.amount.DISCOUNT_VALUE,
+            totalPrice: data.amount.TOTAL_PRICE,
+            priceWithDiscount: data.amount.PRICE_WITHOUT_DISCOUNT,
+          });
+        }
+      }
+      return data;
+    } catch (e) {
+      if (axios.isAxiosError(e) && e.response) {
+        return (
+          (e.response.data as ApiCouponResponse) || {
+            success: false,
+            status: 'error',
+            message: 'Неизвестная ошибка as ApiCouponResponse',
+          }
+        );
+      }
+      return { success: false, status: 'error', message: 'Неизвестная ошибка as catch' };
     } finally {
       set({ loading: false });
     }
@@ -78,8 +133,14 @@ export const useCartStore = create<CartStore>((set, get) => ({
     set({ loading: true });
     try {
       const res = await axios.get(`${API_BASE_URL}/basket/get/items`);
-      console.log(res.data.basketItems);
-      set({ items: res.data.basketItems });
+      // console.log(res.data);
+      set({
+        items: res.data.basketItems,
+        loading: false,
+        discount: res.data.amount['DISCOUNT_VALUE'],
+        totalPrice: res.data.amount['TOTAL_PRICE'],
+        priceWithDiscount: res.data.amount['PRICE_WITHOUT_DISCOUNT'],
+      });
     } catch (e) {
       console.error('Ошибка загрузки корзины', e);
     } finally {
@@ -87,81 +148,65 @@ export const useCartStore = create<CartStore>((set, get) => ({
     }
   },
 
-  addItem: async (dish) => {
-    try {
-      await axios.post(`${API_BASE_URL}/basket/add`, {
-        productId: dish.id,
-        quantity: 1,
-      });
-      set((state) => {
-        const exists = state.items.find((item) => item.id === dish.id);
-        if (exists) {
-          return {
-            items: state.items.map((item) =>
-              item.id === dish.id ? { ...item, quantity: item.quantity + 1 } : item
-            ),
-          };
-        } else {
-          return {
-            items: [...state.items, { ...dish, quantity: 1 }],
-          };
-        }
-      });
-    } catch (e) {
-      console.error('Ошибка при добавлении товара в корзину', e);
+  updateQuantity: async (dish: CartItem, change: number) => {
+    const { items } = get();
+    const productId = dish.id;
+    const existing = items.find((item) => item.id === productId);
+    const newQuantity = (existing?.quantity || 0) + change;
+
+    if (newQuantity <= 0) {
+      // если стало 0 или меньше — удаляем
+      set({ items: items.filter((item) => item.id !== productId) });
+      get().removeItem(productId);
+      return;
     }
+
+    try {
+      const res = await axios.post(`${API_BASE_URL}/basket/add`, {
+        productId: productId,
+        quantity: newQuantity,
+      });
+
+      const updatedItems = existing
+        ? items.map((item) => (item.id === productId ? { ...item, quantity: newQuantity } : item))
+        : [...items, { ...dish, quantity: newQuantity }];
+
+      set({
+        items: updatedItems,
+        loading: false,
+        discount: res.data.amount['DISCOUNT_VALUE'],
+        totalPrice: res.data.amount['TOTAL_PRICE'],
+        priceWithDiscount: res.data.amount['PRICE_WITHOUT_DISCOUNT'],
+      });
+    } catch (error) {
+      console.error('Ошибка при обновлении количества', error);
+    }
+  },
+
+  addItem: async (dish: CartItem) => {
+    get().updateQuantity(dish, 1);
+  },
+
+  increment: async (dish: CartItem) => {
+    get().updateQuantity(dish, 1);
+  },
+
+  decrement: async (dish: CartItem) => {
+    get().updateQuantity(dish, -1);
   },
 
   removeItem: async (id) => {
     try {
-      await axios.post(`${API_BASE_URL}/basket/delete`, { productId: id });
+      const res = await axios.post(`${API_BASE_URL}/basket/delete`, { productId: id });
       set((state) => ({
         items: state.items.filter((item) => item.id !== id),
+        loading: false,
+        discount: res.data.amount['DISCOUNT_VALUE'],
+        totalPrice: res.data.amount['TOTAL_PRICE'],
+        priceWithDiscount: res.data.amount['PRICE_WITHOUT_DISCOUNT'],
       }));
     } catch (e) {
       console.error('Ошибка при удалении товара из корзины', e);
     }
   },
-
-  increment: async (id) => {
-    const existing = get().items.find((item) => item.id === id);
-    if (!existing) return;
-    try {
-      await axios.post(`${API_BASE_URL}/basket/add`, {
-        productId: id,
-        quantity: existing.quantity + 1,
-      });
-      set((state) => ({
-        items: state.items.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-        ),
-      }));
-    } catch (e) {
-      console.error('Ошибка при изменении кол-ва товара в корзине', e);
-    }
-  },
-
-  decrement: async (id) => {
-    const existing = get().items.find((item) => item.id === id);
-    if (!existing) return;
-    if (existing.quantity === 1) {
-      get().removeItem(id);
-      return;
-    }
-    try {
-      await axios.post(`${API_BASE_URL}/basket/add`, {
-        productId: id,
-        quantity: existing.quantity - 1,
-      });
-      set((state) => ({
-        items: state.items
-          .map((item) => (item.id === id ? { ...item, quantity: item.quantity - 1 } : item))
-          .filter((item) => item.quantity > 0),
-      }));
-    } catch (e) {
-      console.error('Ошибка при изменении кол-ва товара в корзине', e);
-    }
-  },
-
-  totalPrice: () => get().items.reduce((sum, item) => sum + item.price * item.quantity, 0),
 }));

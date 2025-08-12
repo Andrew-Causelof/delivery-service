@@ -8,6 +8,9 @@ import DishTypeFilter from './features/Sections/DishTypeFilter';
 import SectionList from './features/Sections/SectionList';
 import OrderButtonMobile from './features/Order/OrderButtonMobile';
 import Cart from './features/Cart/Cart';
+import { NotificationProvider } from './context/NotificationContext';
+import MenuMobileDrag from './features/Menu/MenuMobileDrag';
+import CartMobile from './features/Cart/CartMobile';
 
 import { useProductStore } from './stores/productStore';
 import { useCartStore } from './stores/cartStore';
@@ -25,7 +28,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <NotificationProvider>
       <Breadcrumbs />
       <ServiceTypeMobile />
       <section className="product-category">
@@ -45,7 +48,9 @@ function App() {
           </div>
         </div>
       </section>
-    </>
+      <MenuMobileDrag />
+      <CartMobile />
+    </NotificationProvider>
   );
 }
 

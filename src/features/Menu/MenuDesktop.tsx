@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useProductStore } from '../../stores/productStore';
 import MenuDesktopSkeleton from './MenuDesktopSkeleton';
+import { useUIStore } from '../../stores/uiStore';
 
 function MenuDesktop() {
   // const { sections, loading } = useProductStore();
   const sections = useProductStore((state) => state.sections);
   const selectedFilters = useProductStore((state) => state.selectedFilters);
   const isLoading = useProductStore((state) => state.loading);
+  const { activeTab, setActiveTab } = useUIStore();
 
   const filteredSections =
     selectedFilters.length === 0
@@ -19,8 +21,6 @@ function MenuDesktop() {
             ),
           }))
           .filter((section) => section.items.length > 0);
-
-  const [activeTab, setActiveTab] = useState<string>('');
 
   useEffect(() => {
     const sectionElements = document.querySelectorAll('[data-section]');
@@ -53,9 +53,7 @@ function MenuDesktop() {
   }, [filteredSections]);
 
   const handleOnClick = (tab: string) => {
-    console.log('handleOnClick', tab);
     setActiveTab(tab);
-    console.log(tab);
     const section = document.querySelector(`[data-section="${tab}"]`);
     if (section) section.scrollIntoView({ behavior: 'smooth' });
   };

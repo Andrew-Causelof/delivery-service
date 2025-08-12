@@ -29,7 +29,7 @@ const Dish: React.FC<DishProps> = ({ dish }) => {
       </div>
 
       <div className="quantity-selector">
-        <button className="decrement-btn" onClick={() => decrement(id)}></button>
+        <button className="decrement-btn" onClick={() => decrement(dish)}></button>
         <input
           name=""
           type="number"
@@ -39,7 +39,7 @@ const Dish: React.FC<DishProps> = ({ dish }) => {
           readOnly
           className="quantity-input"
         />
-        <button className="increment-btn" onClick={() => increment(id)}></button>
+        <button className="increment-btn" onClick={() => increment(dish)}></button>
       </div>
     </div>
   );

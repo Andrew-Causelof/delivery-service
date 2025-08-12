@@ -126,3 +126,58 @@ i.bezglutena {
 .product-category .sidebar-right .bottom .promo-code .submit-code.cancel:hover {
   color: rgba(221, 60, 69, 1);
 }
+
+.product-category .sidebar-right {
+  width: 100%;
+  flex: none;
+}
+.delivery-drag-bar {
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+}
+
+@media (max-width: 480px) {
+  .section-cetegory-list .plates {
+    width: 100%;
+  }
+
+  .plate-card .quantity-selector button {
+    height: 27px;
+  }
+  .plate-card .quantity-selector input {
+    height: 27px;
+    font-size: 15px;
+  }
+  .modal-overlay.catalog-delivery-modal {
+    justify-content: flex-end;
+  }
+
+  .catalog-delivery-modal #catalog-delivery-modal {
+    width: 100%;
+  }
+  .catalog-delivery-modal #catalog-delivery-modal .modal-content {
+    margin: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .catalog-delivery-modal #catalog-delivery-modal .modal-content .frame-column .pic {
+    height: 160px;
+  }
+
+  .catalog-delivery-modal .modal-content .frame-column .bottom .desc {
+    width: 100%;
+    max-height: 100px;
+    overflow-y: auto;
+  }
+  .basket-mobile-container.active {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+  }
+}

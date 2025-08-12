@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 import { useProductStore } from '../../stores/productStore';
+import { useUIStore } from '../../stores/uiStore';
 
 function MenuMobile() {
   // const { sections, loading } = useProductStore();
   const sections = useProductStore((state) => state.sections);
   const selectedFilters = useProductStore((state) => state.selectedFilters);
+  const { dragMenu, toggleDragMenu, activeTab, setActiveTab } = useUIStore();
 
   const filteredSections =
     selectedFilters.length === 0
@@ -19,8 +21,6 @@ function MenuMobile() {
             ),
           }))
           .filter((section) => section.items.length > 0);
-
-  const [activeTab, setActiveTab] = useState<string>('');
 
   useEffect(() => {
     const sectionElements = document.querySelectorAll('[data-section]');
@@ -58,10 +58,15 @@ function MenuMobile() {
     if (section) section.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleOnClickBurger = () => {};
+
   return (
     <section className="section-menu-mobile">
       <div className="burger-delivery-wrapper">
-        <div className="burger-delivery">
+        <div
+          className={`burger-delivery ${dragMenu ? 'cross' : ''}`}
+          onClick={() => toggleDragMenu()}
+        >
           <div className="pipe1 pipe"></div>
           <div className="pipe2 pipe"></div>
           <div className="pipe3 pipe"></div>

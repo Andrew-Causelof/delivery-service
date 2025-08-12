@@ -47,7 +47,7 @@ const Card: React.FC<Props> = ({ dish }) => {
               </button>
             ) : (
               <div className="quantity-selector">
-                <button className="decrement-btn" onClick={() => decrement(id)} />
+                <button className="decrement-btn" onClick={() => decrement(dish)} />
                 <input
                   type="number"
                   value={quantity}
@@ -55,7 +55,7 @@ const Card: React.FC<Props> = ({ dish }) => {
                   readOnly
                   className="quantity-input"
                 />
-                <button className="increment-btn" onClick={() => increment(id)} />
+                <button className="increment-btn" onClick={() => increment(dish)} />
               </div>
             )}
           </div>
@@ -95,7 +95,7 @@ const Card: React.FC<Props> = ({ dish }) => {
                 </button>
               ) : (
                 <div className="quantity-selector">
-                  <button className="decrement-btn" onClick={() => decrement(id)}></button>
+                  <button className="decrement-btn" onClick={() => decrement(dish)}></button>
                   <input
                     type="number"
                     value={quantity}
@@ -103,7 +103,7 @@ const Card: React.FC<Props> = ({ dish }) => {
                     readOnly
                     className="quantity-input"
                   />
-                  <button className="increment-btn" onClick={() => increment(id)}></button>
+                  <button className="increment-btn" onClick={() => increment(dish)}></button>
                 </div>
               )}
             </div>

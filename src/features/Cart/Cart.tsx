@@ -4,10 +4,10 @@ import Promo from './Promo';
 import { useCartStore } from '../../stores/cartStore';
 
 function Cart() {
-  const { items, totalPrice, getDeliveryLabel } = useCartStore();
+  const { items, totalPrice, getDeliveryLabel, clearCart } = useCartStore();
 
   const handleClearCart = () => {
-    console.log('clear cart');
+    clearCart();
   };
 
   return (
@@ -15,9 +15,11 @@ function Cart() {
       <div className="top">
         <div className="title">
           <span className="title-name">Корзина</span>
-          <a className="cart-clear noselect" onClick={() => handleClearCart()}>
-            Очистить
-          </a>
+          {items.length > 0 && (
+            <a className="cart-clear noselect" onClick={() => handleClearCart()}>
+              Очистить
+            </a>
+          )}
         </div>
         <ServiceTypeDesktop />
 
@@ -46,7 +48,7 @@ function Cart() {
 
         <button className="order-submit">
           <span className="msg"> Верно, к оформлению</span>
-          <span className="amount"> {totalPrice().toLocaleString('ru-RU')} ₽</span>
+          <span className="amount">{totalPrice.replace(/(\.\d*?[1-9])0+$|\.0+$/, '$1')} ₽</span>
         </button>
       </div>
     </>

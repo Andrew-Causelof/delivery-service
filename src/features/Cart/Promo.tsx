@@ -1,25 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useCartStore } from '../../stores/cartStore';
+import { useNotification } from '../../context/NotificationContext';
 
 function Promo() {
   const [couponCode, setCouponCode] = useState('');
 
-  const { couponApplied, coupon, setCoupon } = useCartStore();
+  const { couponApplied, coupon, deliveryType, applyCoupon, discount, removeCoupon } =
+    useCartStore();
+
+  const notyf = useNotification();
 
   useEffect(() => {
-    setCoupon(coupon);
+    if (couponApplied) {
+      setCouponCode(coupon);
+    }
   }, [couponApplied, coupon]);
 
-  const handleCancelClick = () => {};
+  const handleCancelClick = async () => {
+    const result = await removeCoupon();
+    console.log(result);
 
-  const handleApplyClick = () => {
-    /* 
-      Отправляем запрос на сервер, получаем ответ
-      если ответ положительный, то устанавливаем промокод
-      Получаем скидку и выводим ее 
-    */
+    if (result.success) notyf.success(result.message);
+    else notyf.error(result.message || 'Неизвестная ошибка при применении промокода');
   };
 
+  const handleApplyClick = async () => {
+    const result = await applyCoupon(couponCode);
+
+    console.log(result);
+
+    if (result.success) notyf.success(result.message);
+    else notyf.error(result.message || 'Неизвестная ошибка при применении промокода');
+  };
+
+  if (deliveryType === 'pickup') {
+    return null;
+  }
   return (
     <div className="promo">
       <div className="promo-code">
@@ -35,14 +51,14 @@ function Promo() {
           </button>
         ) : (
           <button className="submit-code" onClick={() => handleApplyClick()}>
-            Применить
+            {couponCode.length > 0 ? 'Применить' : ''}
           </button>
         )}
       </div>
-      {couponApplied && (
+      {couponApplied && discount.length > 0 && (
         <div className="promo-desc">
           <span className="title">Скидка по промокоду:</span>
-          <span className="value">-1 590</span>
+          <span className="value">-{discount.toLocaleString('ru-RU')}</span>
         </div>
       )}
     </div>

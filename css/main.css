@@ -10446,9 +10446,9 @@ section.page-title {
   section.basket-page {
     display: none;
   }
-  .basket-mobile-container {
+  /* .basket-mobile-container {
     display: flex;
-  }
+  } */
 }
 @media (max-width: 480px) {
   .loyalty-banner {
