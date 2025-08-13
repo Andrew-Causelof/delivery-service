@@ -1,5 +1,3 @@
-import React from 'react';
-
 const MenuDesktopSkeleton = () => {
   return (
     <div className="menu">

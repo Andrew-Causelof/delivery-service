@@ -5,14 +5,11 @@ import { useCartStore } from '../../stores/cartStore';
 type DishProps = {
   dish: DishType;
 };
-
-const Dish: React.FC<DishProps> = ({ dish }) => {
+const DishMobile: React.FC<DishProps> = ({ dish }) => {
   const { id, img, name, price, weight } = dish;
-
   const { increment, decrement, items } = useCartStore();
   const item = items.find((i) => i.id === id);
   const quantity = item?.quantity || 0;
-
   return (
     <div className="dish-frame">
       <div className="group">
@@ -45,4 +42,4 @@ const Dish: React.FC<DishProps> = ({ dish }) => {
   );
 };
 
-export default Dish;
+export default DishMobile;

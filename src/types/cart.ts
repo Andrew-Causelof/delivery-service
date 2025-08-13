@@ -1,7 +1,7 @@
-import type { Dish } from './catalog';
+import type { DishType } from './catalog';
 
-export type CartItem = Pick<Dish, 'id' | 'img' | 'name' | 'price'> &
-  Partial<Omit<Dish, 'id' | 'img' | 'name' | 'price'>> & {
+export type CartItem = Pick<DishType, 'id' | 'img' | 'name' | 'price'> &
+  Partial<Omit<DishType, 'id' | 'img' | 'name' | 'price'>> & {
     quantity: number;
   };
 
@@ -27,6 +27,7 @@ export type CartStore = {
   deliveryType: DeliveryType;
   couponApplied: boolean;
   coupon: string;
+  leadTime: string;
 
   discount: string;
   totalPrice: string;

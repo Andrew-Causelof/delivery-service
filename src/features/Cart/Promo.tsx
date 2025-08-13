@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCartStore } from '../../stores/cartStore';
 import { useNotification } from '../../context/NotificationContext';
 
@@ -58,7 +58,7 @@ function Promo() {
       {couponApplied && discount.length > 0 && (
         <div className="promo-desc">
           <span className="title">Скидка по промокоду:</span>
-          <span className="value">-{discount.toLocaleString('ru-RU')}</span>
+          <span className="value">-{discount.toLocaleString()}</span>
         </div>
       )}
     </div>

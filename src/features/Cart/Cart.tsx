@@ -1,4 +1,4 @@
-import ServiceTypeDesktop from '../Order/ServiceTypeDesktop';
+import ServiceType from '../Order/ServiceType';
 import Dish from './Dish';
 import Promo from './Promo';
 import { useCartStore } from '../../stores/cartStore';
@@ -21,7 +21,7 @@ function Cart() {
             </a>
           )}
         </div>
-        <ServiceTypeDesktop />
+        <ServiceType tag="desktop" />
 
         <div className="dishes">
           {items.map((item) => (
@@ -46,10 +46,10 @@ function Cart() {
           </div>
         </div>
 
-        <button className="order-submit">
+        <a href="/basket/" className="order-submit">
           <span className="msg"> Верно, к оформлению</span>
           <span className="amount">{totalPrice.replace(/(\.\d*?[1-9])0+$|\.0+$/, '$1')} ₽</span>
-        </button>
+        </a>
       </div>
     </>
   );

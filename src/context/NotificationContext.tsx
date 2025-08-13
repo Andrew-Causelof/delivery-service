@@ -1,5 +1,4 @@
-import React from 'react';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css'; // Подключаем стили
 
@@ -9,6 +8,10 @@ const NotificationContext = createContext(notyf);
 
 export const useNotification = () => useContext(NotificationContext);
 
-export const NotificationProvider = ({ children }) => {
+interface NotificationProviderProps {
+  children: ReactNode;
+}
+
+export const NotificationProvider = ({ children }: NotificationProviderProps) => {
   return <NotificationContext.Provider value={notyf}>{children}</NotificationContext.Provider>;
 };

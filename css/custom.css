@@ -99,7 +99,8 @@ i.bezglutena {
   justify-content: space-between;
 }
 
-.product-category .sidebar-right .top .dishes .dish-frame .group {
+.product-category .sidebar-right .top .dishes .dish-frame .group,
+.basket-mobile-container .dishes .dish-frame .group {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -179,5 +180,20 @@ i.bezglutena {
     right: 0;
     bottom: 0;
     z-index: 1000;
+    margin-top: 0px;
+    padding-bottom: 12px;
+  }
+  .basket-mobile-container .dishes .dish-frame {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .basket-mobile-container .dishes {
+    min-height: 246px;
+    max-height: 290px;
+    overflow-y: scroll;
+  }
+  .basket-mobile-container .bottom {
+    margin-top: auto;
   }
 }

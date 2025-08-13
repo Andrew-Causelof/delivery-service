@@ -1,4 +1,4 @@
-import React from 'react';
+import { useMemo } from 'react';
 import Section from './Section';
 import Card from '../Product/Card';
 import CardSkeleton from './CardSkeleton';
@@ -9,8 +9,8 @@ function SectionList() {
   const selectedFilters = useProductStore((state) => state.selectedFilters);
   const isLoading = useProductStore((state) => state.loading);
 
-  const filteredSections =
-    selectedFilters.length === 0
+  const filteredSections = useMemo(() => {
+    return selectedFilters.length === 0
       ? sections
       : sections
           .map((section) => ({
@@ -20,6 +20,7 @@ function SectionList() {
             ),
           }))
           .filter((section) => section.items.length > 0);
+  }, [sections, selectedFilters]);
 
   if (isLoading) {
     return (

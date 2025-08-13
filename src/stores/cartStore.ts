@@ -12,6 +12,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
   discount: '',
   totalPrice: '',
   priceWithDiscount: '',
+  leadTime: '~60 мин',
 
   setDeliveryType: (type: DeliveryType) => set({ deliveryType: type }),
 
@@ -23,7 +24,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
   clearCart: async () => {
     set({ loading: true });
     try {
-      const res = await axios.post(`${API_BASE_URL}/basket/clear`);
+      await axios.post(`${API_BASE_URL}/basket/clear`);
       set({
         items: [],
         loading: false,

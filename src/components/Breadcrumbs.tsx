@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Breadcrumbs() {
   return (
     <section className="page-title">

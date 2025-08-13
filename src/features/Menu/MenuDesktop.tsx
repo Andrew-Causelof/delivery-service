@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 import { useProductStore } from '../../stores/productStore';
 import MenuDesktopSkeleton from './MenuDesktopSkeleton';
 import { useUIStore } from '../../stores/uiStore';
@@ -10,8 +10,8 @@ function MenuDesktop() {
   const isLoading = useProductStore((state) => state.loading);
   const { activeTab, setActiveTab } = useUIStore();
 
-  const filteredSections =
-    selectedFilters.length === 0
+  const filteredSections = useMemo(() => {
+    return selectedFilters.length === 0
       ? sections
       : sections
           .map((section) => ({
@@ -21,6 +21,7 @@ function MenuDesktop() {
             ),
           }))
           .filter((section) => section.items.length > 0);
+  }, [sections, selectedFilters]);
 
   useEffect(() => {
     const sectionElements = document.querySelectorAll('[data-section]');
@@ -52,11 +53,11 @@ function MenuDesktop() {
     }
   }, [filteredSections]);
 
-  const handleOnClick = (tab: string) => {
+  const handleOnClick = useCallback((tab: string) => {
     setActiveTab(tab);
     const section = document.querySelector(`[data-section="${tab}"]`);
     if (section) section.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   if (isLoading) return <MenuDesktopSkeleton />;
 

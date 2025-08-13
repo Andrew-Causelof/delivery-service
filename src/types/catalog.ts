@@ -1,4 +1,4 @@
-export type Dish = {
+export type DishType = {
   id: number;
   img: string;
   name: string;
@@ -10,6 +10,7 @@ export type Dish = {
   cardTags: string[];
   previewText: string;
   detailText: string;
+  quantity: number;
 };
 
 export type ProductSection = {
@@ -17,7 +18,7 @@ export type ProductSection = {
   desc: string;
   img: string;
   slug: string;
-  items: Dish[];
+  items: DishType[];
 };
 
 export type DishFilter = {

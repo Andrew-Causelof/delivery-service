@@ -1,173 +1,42 @@
-import React from 'react';
 import { useUIStore } from '../../stores/uiStore';
+import ServiceType from '../Order/ServiceType';
+import { useCartStore } from '../../stores/cartStore';
+
+import DishMobile from './DishMobile';
+import Promo from './Promo';
 
 function CartMobile() {
   const { cartMobile, setCartMobile } = useUIStore();
+  const { items, totalPrice, getDeliveryLabel, clearCart, leadTime } = useCartStore();
 
   return (
     <div className={`basket-mobile-container ${cartMobile ? 'active' : ''}`}>
       <div className="page-title">
-        <a href="" className="back" onClick={() => setCartMobile(false)}>
+        <a className="back" onClick={() => setCartMobile(false)}>
           Назад
         </a>
         <span>Корзина</span>
-        <a href="" className="clear-cart">
-          Очистить
-        </a>
+
+        {items.length > 0 && (
+          <a className="clear-cart" onClick={() => clearCart()}>
+            Очистить
+          </a>
+        )}
       </div>
 
-      <ul className="delivery">
-        <li>
-          <input type="radio" id="option-delivery" name="delivery-cart" value="delivery" checked />
-          <label htmlFor="option-delivery" className="noselect">
-            Доставка
-          </label>
-        </li>
-        <li>
-          <input type="radio" id="option-pickup" name="delivery-cart" value="pickup" />
-          <label htmlFor="option-pickup" className="noselect">
-            Навынос
-          </label>
-        </li>
-      </ul>
+      <ServiceType tag="mobile" />
 
       <div className="dishes">
-        <div className="dish-frame">
-          <div className="img-container">
-            <img
-              src="http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg"
-              alt=""
-            />
-          </div>
-          <div className="dish-item">
-            <a href="" className="dish-item-name">
-              Ассорти Шашлыков (свинина, телятина, курица)
-            </a>
-            <div className="dish-item-additional">
-              <span className="price">2360</span>
-              <div className="weight">1 295 г</div>
-            </div>
-          </div>
-          <div className="quantity-selector">
-            <button className="decrement-btn"></button>
-            <input name="persons" type="persons" value="1" min="1" className="quantity-input" />
-            <button className="increment-btn"></button>
-          </div>
-        </div>
-        <div className="dish-frame">
-          <div className="img-container">
-            <img
-              src="http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg"
-              alt=""
-            />
-          </div>
-          <div className="dish-item">
-            <a href="" className="dish-item-name">
-              Ассорти Шашлыков (свинина, телятина, курица)
-            </a>
-            <div className="dish-item-additional">
-              <span className="price">2360</span>
-              <div className="weight">1 295 г</div>
-            </div>
-          </div>
-          <div className="quantity-selector">
-            <button className="decrement-btn"></button>
-            <input name="persons" type="persons" value="1" min="1" className="quantity-input" />
-            <button className="increment-btn"></button>
-          </div>
-        </div>
-        <div className="dish-frame">
-          <div className="img-container">
-            <img
-              src="http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg"
-              alt=""
-            />
-          </div>
-          <div className="dish-item">
-            <a href="" className="dish-item-name">
-              Ассорти Шашлыков (свинина, телятина, курица)
-            </a>
-            <div className="dish-item-additional">
-              <span className="price">2360</span>
-              <div className="weight">1 295 г</div>
-            </div>
-          </div>
-          <div className="quantity-selector">
-            <button className="decrement-btn"></button>
-            <input name="persons" type="persons" value="1" min="1" className="quantity-input" />
-            <button className="increment-btn"></button>
-          </div>
-        </div>
-        <div className="dish-frame">
-          <div className="img-container">
-            <img
-              src="http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg"
-              alt=""
-            />
-          </div>
-          <div className="dish-item">
-            <a href="" className="dish-item-name">
-              Ассорти Шашлыков (свинина, телятина, курица)
-            </a>
-            <div className="dish-item-additional">
-              <span className="price">2360</span>
-              <div className="weight">1 295 г</div>
-            </div>
-          </div>
-          <div className="quantity-selector">
-            <button className="decrement-btn"></button>
-            <input name="persons" type="persons" value="1" min="1" className="quantity-input" />
-            <button className="increment-btn"></button>
-          </div>
-        </div>
-        <div className="dish-frame">
-          <div className="img-container">
-            <img
-              src="http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg"
-              alt=""
-            />
-          </div>
-          <div className="dish-item">
-            <a href="" className="dish-item-name">
-              Ассорти Шашлыков (свинина, телятина, курица)
-            </a>
-            <div className="dish-item-additional">
-              <span className="price">2360</span>
-              <div className="weight">1 295 г</div>
-            </div>
-          </div>
-          <div className="quantity-selector">
-            <button className="decrement-btn"></button>
-            <input name="persons" type="persons" value="1" min="1" className="quantity-input" />
-            <button className="increment-btn"></button>
-          </div>
-        </div>
-        <div className="dish-frame">
-          <div className="img-container">
-            <img
-              src="http://dushes-cafe.seo-gravity.ru/upload/iblock/8f0/zr570shv5x20542pkh7yvbro1aujvnuh.jpg"
-              alt=""
-            />
-          </div>
-          <div className="dish-item">
-            <a href="" className="dish-item-name">
-              Ассорти Шашлыков (свинина, телятина, курица)
-            </a>
-            <div className="dish-item-additional">
-              <span className="price">2360</span>
-              <div className="weight">1 295 г</div>
-            </div>
-          </div>
-          <div className="quantity-selector">
-            <button className="decrement-btn"></button>
-            <input name="persons" type="persons" value="1" min="1" className="quantity-input" />
-            <button className="increment-btn"></button>
-          </div>
-        </div>
+        {items.map((item) => (
+          <DishMobile key={item.id} dish={item} />
+        ))}
       </div>
+
       <div className="bottom">
         <div className="detail">
-          <div className="promo">
+          <Promo />
+
+          {/* <div className="promo">
             <div className="promo-code">
               <input type="text" placeholder="ввести промокод" />
               <button className="submit-code">Применить</button>
@@ -176,25 +45,27 @@ function CartMobile() {
               <span className="title">Скидка по промокоду:</span>
               <span className="value">-1 590</span>
             </div>
-          </div>
+          </div> */}
 
           <div className="info">
             <div className="info-item">
               <span className="name">Способ получения:</span>
-              <span className="value">Доставка</span>
+              <span className="value">{getDeliveryLabel()}</span>
             </div>
 
-            <div className="info-item">
-              <span className="name">Время доставки:</span>
-              <span className="value">~60 мин</span>
-            </div>
+            {items.length > 0 && (
+              <div className="info-item">
+                <span className="name">Время доставки:</span>
+                <span className="value">{leadTime}</span>
+              </div>
+            )}
           </div>
         </div>
 
-        <button className="order-submit">
+        <a href="/basket/" className="order-submit">
           <span className="msg"> Верно, к оформлению</span>
-          <span className="amount"> 5 141 ₽</span>
-        </button>
+          <span className="amount">{totalPrice.replace(/(\.\d*?[1-9])0+$|\.0+$/, '$1')} ₽</span>
+        </a>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import { useUIStore } from '../../stores/uiStore';
 import { useProductStore } from '../../stores/productStore';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,8 +13,8 @@ function MenuMobileDrag() {
   const sections = useProductStore((state) => state.sections);
   const selectedFilters = useProductStore((state) => state.selectedFilters);
 
-  const filteredSections =
-    selectedFilters.length === 0
+  const filteredSections = useMemo(() => {
+    return selectedFilters.length === 0
       ? sections
       : sections
           .map((section) => ({
@@ -24,12 +24,26 @@ function MenuMobileDrag() {
             ),
           }))
           .filter((section) => section.items.length > 0);
+  }, [sections, selectedFilters]);
+
+  // const filteredSections =
+  //   selectedFilters.length === 0
+  //     ? sections
+  //     : sections
+  //         .map((section) => ({
+  //           ...section,
+  //           items: section.items.filter((item) =>
+  //             Object.keys(item.filterList).some((tag) => selectedFilters.includes(tag))
+  //           ),
+  //         }))
+  //         .filter((section) => section.items.length > 0);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const sectionElements = document.querySelectorAll('[data-section]');
+
     const options = {
       root: null,
       rootMargin: '0px 0px -70% 0px', // позволяет считать секцию активной, когда она вошла на 30% сверху

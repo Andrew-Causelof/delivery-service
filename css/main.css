@@ -5117,7 +5117,7 @@ section.catalog-delivery .swiper-wrapper {
   padding-left: 3px;
 }
 .order-button-mobile #order-button-mobile .leadtime::after {
-  content: 'мин';
+  content: '';
   padding-left: 3px;
 }
 

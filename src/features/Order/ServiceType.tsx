@@ -1,6 +1,6 @@
 import { useCartStore } from '../../stores/cartStore';
 
-function ServiceTypeDesktop() {
+function ServiceType({ tag }: { tag?: string }) {
   const { deliveryType, setDeliveryType } = useCartStore();
 
   return (
@@ -8,14 +8,14 @@ function ServiceTypeDesktop() {
       <li>
         <input
           type="radio"
-          id="option-delivery"
-          name="delivery-cart"
+          id={`option-delivery-${tag}`}
+          name={`delivery-cart-${tag}`}
           value="delivery"
           checked={deliveryType === 'delivery'}
           onChange={() => setDeliveryType('delivery')}
         />
         <label
-          htmlFor="option-delivery"
+          htmlFor={`option-delivery-${tag}`}
           className="noselect"
           onClick={() => setDeliveryType('delivery')}
         >
@@ -25,14 +25,14 @@ function ServiceTypeDesktop() {
       <li>
         <input
           type="radio"
-          id="option-pickup"
-          name="delivery-cart"
+          id={`option-pickup-${tag}`}
+          name={`delivery-cart-${tag}`}
           value="pickup"
           checked={deliveryType === 'pickup'}
           onChange={() => setDeliveryType('pickup')}
         />
         <label
-          htmlFor="option-pickup"
+          htmlFor={`option-pickup-${tag}`}
           className="noselect"
           onClick={() => setDeliveryType('pickup')}
         >
@@ -43,4 +43,4 @@ function ServiceTypeDesktop() {
   );
 }
 
-export default ServiceTypeDesktop;
+export default ServiceType;
